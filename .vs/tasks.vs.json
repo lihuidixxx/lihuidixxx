@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "任务-paper",
+      "appliesTo": "3222004637/paper.cpp",
+      "type": "launch"
+    }
+  ]
+}
