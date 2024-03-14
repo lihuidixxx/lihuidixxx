@@ -7,16 +7,16 @@
 #include <codecvt>  
 #include <regex>    
 
-// Ê¹ÓÃUTF-8±àÂëÀ´´¦ÀíÖÐÎÄ  
+// Ê¹ï¿½ï¿½UTF-8ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 
-// Ê¹ÓÃÖÐÎÄ¶ººÅºÍ¾äºÅ·Ö´Êº¯Êý  
+// Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ÅºÍ¾ï¿½Å·Ö´Êºï¿½ï¿½ï¿½  
 std::vector<std::wstring> tokenize_zh(const std::wstring& text) {
 	std::vector<std::wstring> tokens;
 	std::wstring token;
 
 	for (wchar_t ch : text) {
-		if (ch == L'£¬' || ch == L'¡£') {
+		if (ch == L'ï¿½ï¿½' || ch == L'ï¿½ï¿½') {
 			if (!token.empty()) {
 				tokens.push_back(token);
 				token.clear();
@@ -35,7 +35,7 @@ std::vector<std::wstring> tokenize_zh(const std::wstring& text) {
 }
 
 
-// ÒÆ³ý±êµã·ûºÅ  
+// ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 std::wstring removePunctuation_zh(const std::wstring& input) {
 	std::wstring result;
 	for (wchar_t c : input) {
@@ -46,7 +46,7 @@ std::wstring removePunctuation_zh(const std::wstring& input) {
 	return result;
 }
 
-// ÒÆ³ýÍ£ÓÃ´Ê  
+// ï¿½Æ³ï¿½Í£ï¿½Ã´ï¿½  
 std::vector<std::wstring> removeStopWords_zh(const std::vector<std::wstring>& tokens, const std::vector<std::wstring>& stopWords) {
 	std::vector<std::wstring> result;
 	for (const std::wstring& token : tokens) {
@@ -57,7 +57,7 @@ std::vector<std::wstring> removeStopWords_zh(const std::vector<std::wstring>& to
 	return result;
 }
 
-// ½«Ô¤´¦Àí²½ÖèÓ¦ÓÃÓÚÖÐÎÄÎÄ±¾  
+// ï¿½ï¿½Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½  
 std::wstring preprocessText_zh(const std::wstring& input, const std::vector<std::wstring>& stopWords) {
 	std::wstring processed = removePunctuation_zh(input);
 	std::vector<std::wstring> tokens = tokenize_zh(processed);
@@ -70,9 +70,9 @@ std::wstring preprocessText_zh(const std::wstring& input, const std::vector<std:
 	return stream.str();
 }
 
-// ¼ÆËãÏàËÆ¶Èº¯Êý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶Èºï¿½ï¿½ï¿½
 double calculateSimilarity(const std::wstring& str1, const std::wstring& str2) {
-	// Ê¹ÓÃ¼òµ¥µÄ×Ö·ûÆ¥ÅäÀ´¼ÆËãÏàËÆ¶È  
+	// Ê¹ï¿½Ã¼òµ¥µï¿½ï¿½Ö·ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½  
 	int commonChars = 0;
 	int totalChars = std::max(str1.length(), str2.length());
 
@@ -80,7 +80,7 @@ double calculateSimilarity(const std::wstring& str1, const std::wstring& str2) {
 		for (size_t j = 0; j < str2.length(); j++) {
 			if (str1[i] == str2[j]) {
 				commonChars++;
-				break;  // ÕÒµ½Ò»¸öÆ¥ÅäºóÌø³öÄÚ²ãÑ­»·  
+				break;  // ï¿½Òµï¿½Ò»ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½Ñ­ï¿½ï¿½  
 			}
 		}
 	}
@@ -91,16 +91,16 @@ double calculateSimilarity(const std::wstring& str1, const std::wstring& str2) {
 
 int main() {
 	std::string fileName1, fileName2;
-	std::cout << "ÇëÊäÈëµÚÒ»¸öÂÛÎÄÎÄ¼þµÄÃû³Æ: ";
+	std::cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ";
 	std::cin >> fileName1;
-	std::cout << "ÇëÊäÈëµÚ¶þ¸öÂÛÎÄÎÄ¼þµÄÃû³Æ: ";
+	std::cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: ";
 	std::cin >> fileName2;
 
 	std::ifstream file1(fileName1);
 	std::ifstream file2(fileName2);
 
 	if (!file1.is_open() || !file2.is_open()) {
-		std::cerr << "ÎÞ·¨´ò¿ªÎÄ¼þ£¡" << std::endl;
+		std::cerr << "ï¿½Þ·ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½" << std::endl;
 		return 1;
 	}
 
@@ -113,13 +113,13 @@ int main() {
 	std::wstring wcontent1 = converter.from_bytes(content1);
 	std::wstring wcontent2 = converter.from_bytes(content2);
 
-	// ÖÐÎÄÍ£ÓÃ´ÊÁÐ±í  
-	std::vector<std::wstring> stopWords = { L"µÄ", L"ºÍ", L"ÊÇ", L"ÁË", L"ÔÚ", L"²»" };
+	// ï¿½ï¿½ï¿½ï¿½Í£ï¿½Ã´ï¿½ï¿½Ð±ï¿½  
+	std::vector<std::wstring> stopWords = { L"ï¿½ï¿½", L"ï¿½ï¿½", L"ï¿½ï¿½", L"ï¿½ï¿½", L"ï¿½ï¿½", L"ï¿½ï¿½" };
 	std::wstring preprocessedContent1 = preprocessText_zh(content1, stopWords);
 	std::wstring preprocessedContent2 = preprocessText_zh(content2, stopWords);
 
 	double similarity = calculateSimilarity(content1, content2);
-	std::cout << "ÏàËÆ¶È: " << similarity << std::endl;
+	std::cout << "ï¿½ï¿½ï¿½Æ¶ï¿½: " << similarity << std::endl;
 
 	return 0;
 }
